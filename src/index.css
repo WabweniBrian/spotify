@@ -1,13 +1,257 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Mulish&family=Nunito&family=Nunito+Sans:wght@400;600&family=Poppins:ital,wght@0,400;0,500;1,300;1,400&family=Questrial&family=Raleway&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --progress: 50%;
+  --volume: 50%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Testing on phone offline */
+@font-face {
+  font-family: myFont;
+  src: url("../public/Questrial-Regular.ttf") format("truetype");
+}
+
+html {
+  @apply scroll-smooth;
+}
+
+*::-webkit-scrollbar {
+  @apply w-[5px] h-[5px];
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply rounded bg-slate-400;
+}
+
+*::-webkit-scrollbar-track {
+  @apply !bg-transparent;
+}
+
+*::selection {
+  @apply bg-primary text-white;
+}
+
+body {
+  @apply text-slate-300 max-h-screen bg-card-dark overflow-hidden;
+  font-family: myFont;
+}
+
+.bg-image {
+  @apply absolute top-0 left-0  !bg-cover !bg-no-repeat !bg-center w-screen h-screen -z-10;
+}
+
+/* General styles */
+p,
+a,
+svg {
+  @apply text-muted;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: 0px;
+}
+
+button {
+  @apply cursor-default sm:cursor-pointer;
+}
+
+/* Back to top button */
+.back-to-top-btn {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.back-to-top-btn.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+a.active {
+  @apply text-white !opacity-100 relative before:absolute before:h-full before:w-1 before:bg-primary before:top-0 before:left-0 before:rounded-full;
+}
+
+a.active::before {
+  box-shadow: 0 0.5rem 1rem 0.5rem #0080006b;
+}
+
+a.active:not(.sidebar-link) {
+  @apply !text-primary;
+}
+
+.icon-box {
+  @apply w-8 h-8 rounded-full grid place-items-center flex-shrink-0 sm:cursor-pointer;
+}
+
+/* Loader */
+.loader {
+  @apply w-20 h-20 border-4 border-primary rounded-full;
+  border-block-start-color: transparent;
+  animation: rotate 1s ease-in-out infinite;
+}
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Range Slider for volume */
+.range {
+  @apply appearance-none relative h-[5px] border-none outline-none rounded-full bg-dark-light before:absolute before:left-0 before:top-0 before:bg-primary  before:h-full before:rounded-md sm:cursor-pointer;
+}
+
+.duration::before {
+  width: var(--progress) !important;
+}
+
+.volume::before {
+  width: var(--volume) !important;
+}
+
+.range::-webkit-slider-thumb {
+  @apply w-2 h-5 rounded-md bg-[#f1f1f1] relative appearance-none sm:cursor-pointer;
+  -webkit-appearance: none;
+  transition: width 0.3s linear;
+}
+
+.range.duration::-webkit-slider-thumb {
+  @apply w-4 h-4 rounded-full border-2;
+  box-shadow: 0 0 0 2px #49e12e;
+}
+
+.range.duration::-webkit-slider-thumb:active {
+  box-shadow: 0 0 0 10px #49e12e5c;
+}
+
+/* Firefox */
+.range::-moz-progress-bar {
+  @apply w-2 h-5 rounded-md bg-[#f1f1f1] relative appearance-none sm:cursor-pointer;
+}
+
+.range.duration::-moz-progress-bar {
+  @apply w-4 h-4 rounded-full border-2;
+  box-shadow: 0 0 0 2px #49e12e;
+}
+
+.range.duration::-moz-progress-bar:active {
+  box-shadow: 0 0 0 10px #49e12e5c;
+}
+.range::-moz-range-thumb {
+  @apply w-2 h-5 rounded-md bg-[#f1f1f1] relative appearance-none sm:cursor-pointer;
+}
+
+.range.duration::-moz-range-thumb {
+  @apply w-4 h-4 rounded-full border-2;
+  box-shadow: 0 0 0 2px #49e12e;
+}
+
+.range.duration::-moz-range-thumb:active {
+  box-shadow: 0 0 0 10px #49e12e5c;
+}
+
+.theme.active {
+  border: 3px solid #2d2f3b;
+  box-shadow: 0 0 0 3px #49e12e;
+}
+
+.play-pause {
+  box-shadow: 0 0 0 3px #bfbfbf;
+}
+
+.animate-spin {
+  animation: spin 5s linear infinite;
+}
+.small-player {
+  @apply before:absolute before:w-full before:h-full before:rounded-full;
+  box-shadow: 2px 2px 10px 2px #49e12e5d;
+  animation: shadow 1s ease-in-out infinite alternate-reverse;
+}
+
+.small-player::before {
+  background: url("/public/images/migos.jpg");
+  background-size: cover;
+  animation: spin 3s linear infinite;
+}
+
+@keyframes shadow {
+  100% {
+    box-shadow: 4px 4px 25px 4px #49e12ed0;
+  }
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.player:hover img {
+  @apply scale-125;
+}
+
+.playlist-box:hover img {
+  @apply scale-125;
+}
+.playlist-box:hover .icon-box {
+  @apply !grid;
+}
+/* React Tabs */
+.react-tabs__tab-list {
+  @apply !flex-align-center !border-none !py-2 bg-hover-color-dark/50 backdrop-blur-md sm:!px-4 lg:!px-6 transition-a !overflow-auto hide-scrollbar;
+}
+
+.react-tabs__tab {
+  @apply !border-0;
+}
+
+.react-tabs__tab--selected {
+  @apply !bg-transparent !border-none !text-inherit relative before:absolute before:-bottom-2 before:w-1/2 before:h-1 before:bg-primary before:left-1/2 before:-translate-x-1/2;
+}
+.react-tabs__tab--selected::before {
+  box-shadow: 0 -4px 10px #49e12e;
+}
+
+.react-tabs__tab:focus:after {
+  @apply !hidden;
+}
+
+/* Toast */
+.toast.danger {
+  @apply text-red-500 border-l-4 border-l-red-500;
+}
+.toast.success {
+  @apply text-green-500 border-l-4 border-l-green-500;
+}
+
+.toast.show {
+  @apply -translate-x-1/2 translate-y-0;
+  animation: bounce 0.5s ease-in-out forwards;
+}
+
+@keyframes bounce {
+  0% {
+    top: -0.5rem;
+  }
+  50% {
+    top: 1.2rem;
+  }
+  100% {
+    top: 0.5rem;
+  }
+}
+
+.tooltip {
+  animation: zoom 0.4s ease-in-out;
+}
+
+#nprogress .bar {
+  @apply !bg-primary;
+}
+
+#nprogress .peg {
+  @apply !shadow-none;
 }

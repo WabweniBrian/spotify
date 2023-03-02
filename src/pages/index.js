@@ -1,0 +1,15 @@
+export { default as Home } from "./Home";
+export { default as Albums } from "./Albums";
+export { default as Artists } from "./Artists";
+export { default as Discover } from "./Discover";
+export { default as Podcasts } from "./Podcasts";
+export { default as Radio } from "./Radio";
+export { default as SinglePlayList } from "./SinglePlayList";
+export { default as Profile } from "./Profile";
+export { default as Settings } from "./Settings";
+export { default as Favorites } from "./Favorites";
+export { default as Playlists } from "./Playlists";
+export { default as SingleArtist } from "./SingleArtist";
+export { default as SingleAlbum } from "./SingleAlbum";
+export { default as Login } from "./Login";
+export { default as PageNotFound } from "./PageNotFound";
